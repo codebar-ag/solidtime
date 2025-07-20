@@ -96,6 +96,23 @@ const page = usePage<{
         user: User;
     };
 }>();
+
+// Define the counts structure type and provide proper default
+type CountsType = {
+    projects: number;
+    clients: number;
+    members: number;
+    tags: number;
+};
+
+const defaultCounts: CountsType = {
+    projects: 0,
+    clients: 0,
+    members: 0,
+    tags: 0,
+};
+
+const counts = computed(() => page.props.auth.user.current_team?.counts || defaultCounts);
 </script>
 
 <template>
@@ -170,7 +187,7 @@ const page = usePage<{
                     </nav>
 
                     <div
-                        class="text-text-tertiary text-xs font-semibold pt-5 pb-1.5">
+                        class="text-text-tertiary text-sm font-semibold pt-5 pb-1.5">
                         Manage
                     </div>
 
@@ -181,6 +198,7 @@ const page = usePage<{
                                 title="Projects"
                                 :icon="FolderIcon"
                                 :href="route('projects')"
+                                :count="counts.projects"
                                 :current="
                                     route().current('projects')
                                 "></NavigationSidebarItem>
@@ -189,6 +207,7 @@ const page = usePage<{
                                 title="Clients"
                                 :icon="UserCircleIcon"
                                 :current="route().current('clients')"
+                                :count="counts.clients"
                                 :href="
                                     route('clients')
                                 "></NavigationSidebarItem>
@@ -197,6 +216,7 @@ const page = usePage<{
                                 title="Members"
                                 :icon="UserGroupIcon"
                                 :current="route().current('members')"
+                                :count="counts.members"
                                 :href="
                                     route('members')
                                 "></NavigationSidebarItem>
@@ -205,6 +225,7 @@ const page = usePage<{
                                 title="Tags"
                                 :icon="TagIcon"
                                 :current="route().current('tags')"
+                                :count="counts.tags"
                                 :href="route('tags')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="
@@ -218,7 +239,7 @@ const page = usePage<{
                     </nav>
                     <div
                         v-if="canUpdateOrganization()"
-                        class="text-text-tertiary text-xs font-semibold pt-5 pb-1.5">
+                        class="text-text-tertiary text-sm font-semibold pt-5 pb-1.5">
                         Admin
                     </div>
 

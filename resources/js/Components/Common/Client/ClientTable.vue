@@ -2,17 +2,22 @@
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import { UserCircleIcon } from '@heroicons/vue/24/solid';
 import { PlusIcon } from '@heroicons/vue/16/solid';
-import { type Component, ref } from 'vue';
+import { type Component, ref, computed } from 'vue';
 import { type Client } from '@/packages/api/src';
 import ClientTableRow from '@/Components/Common/Client/ClientTableRow.vue';
 import ClientCreateModal from '@/Components/Common/Client/ClientCreateModal.vue';
 import ClientTableHeading from '@/Components/Common/Client/ClientTableHeading.vue';
 import { canCreateClients } from '@/utils/permissions';
 
-defineProps<{
-    clients: Client[];
+const props = defineProps<{
+  clients: Client[];
 }>();
+
 const createClient = ref(false);
+
+const sortedClients = computed(() => {
+  return [...props.clients].sort((a, b) => a.name.localeCompare(b.name));
+});
 </script>
 
 <template>
@@ -22,7 +27,7 @@ const createClient = ref(false);
             <div
                 data-testid="client_table"
                 class="grid min-w-full"
-                style="grid-template-columns: 1fr 150px 200px 80px">
+                style="grid-template-columns: 1fr 150px 80px">
                 <ClientTableHeading></ClientTableHeading>
                 <div
                     v-if="clients.length === 0"
@@ -42,7 +47,7 @@ const createClient = ref(false);
                         >Create your First Client
                     </SecondaryButton>
                 </div>
-                <template v-for="client in clients" :key="client.id">
+                <template v-for="client in sortedClients" :key="client.id">
                     <ClientTableRow :client="client"></ClientTableRow>
                 </template>
             </div>

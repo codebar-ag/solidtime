@@ -60,7 +60,7 @@ const userHasValidMailAddress = computed(() => {
 <template>
     <TableRow>
         <div
-            class="whitespace-nowrap flex items-center space-x-5 py-4 pr-3 text-sm font-medium text-text-primary pl-4 sm:pl-6 lg:pl-8 3xl:pl-12">
+            class="whitespace-nowrap flex items-center space-x-5 py-4 pr-3 text-sm font-medium text-text-primary pl-4 sm:pl-6 lg:pl-8">
             <span>
                 {{ member.name }}
             </span>
@@ -83,17 +83,6 @@ const userHasValidMailAddress = computed(() => {
                       )
                     : '--'
             }}
-        </div>
-        <div
-            class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary flex space-x-1 items-center font-medium">
-            <CheckCircleIcon
-                v-if="member.is_placeholder === false"
-                class="w-5"></CheckCircleIcon>
-            <span v-if="member.is_placeholder === false">Active</span>
-            <UserCircleIcon
-                v-if="member.is_placeholder === true"
-                class="w-5"></UserCircleIcon>
-            <span v-if="member.is_placeholder === true">Inactive</span>
         </div>
         <div
             class="relative whitespace-nowrap flex items-center pl-3 text-right text-sm font-medium sm:pr-0 pr-4 sm:pr-6 lg:pr-8 3xl:pr-12">
